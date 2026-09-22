@@ -47,6 +47,31 @@ img{max-width:100%}
 </style>
 </head>
 <body>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Salta y Aprende">
+<meta name="theme-color" content="#0F2534">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAB9UlEQVR42u3SsQmAMBRF0WxgLaS1loAjZC5HcRpnsHYQiyxgavHnwF3gPU6alk16LblAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BId+geMuJVi9pXm/ggUHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAGHxg0OwSE4BIfgEByCQ9FxPOccrN7S9ajBggMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggEPjBofgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDn1SA6avtWJYlsMgAAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAB9UlEQVR42u3SsQmAMBRF0WxgLaS1loAjZC5HcRpnsHYQiyxgavHnwF3gPU6alk16LblAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BId+geMuJVi9pXm/ggUHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAGHxg0OwSE4BIfgEByCQ9FxPOccrN7S9ajBggMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggEPjBofgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDn1SA6avtWJYlsMgAAAAAElFTkSuQmCC">
+<style>
+/* base que en el artifact pone la plataforma */
+:root{
+  color-scheme: light dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
 <title>Salta y Aprende</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;700;900&display=swap">
@@ -565,8 +590,9 @@ h1 em{font-style:normal; color:var(--accent)}
 
   function startRound(){
     stopTimer();
-    game = {items:deck(), turn:0, hits:0, streak:0, best:0, results:[], current:null, deadline:0, locked:false};
-    lockControls(false);
+    // Bloqueado hasta que salga la primera consigna: durante el "¿Listos?" nada cuenta.
+    game = {items:deck(), turn:0, hits:0, streak:0, best:0, results:[], current:null, deadline:0, locked:true};
+    lockControls(true);
     $("hits").textContent = "0";
     var dots = $("dots"); dots.textContent = "";
     for(var i = 0; i < cfg.turnos; i++){
@@ -752,6 +778,8 @@ if("serviceWorker" in navigator){
   });
 }
 </script>
+</body>
+</html>
 </body>
 </html>
 </body>
