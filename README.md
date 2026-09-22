@@ -10,3 +10,7 @@ salta a la casilla que está pegada en el piso.
 - Funciona sin internet una vez abierto, y se puede agregar a la pantalla de inicio
 
 Abrir: https://jairrockjas-wjrr.github.io/salta-y-aprende/
+
+## Créditos
+
+Voz generada con ElevenLabs (voz "Sandra", modelo eleven_multilingual_v2).
