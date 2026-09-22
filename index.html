@@ -22,6 +22,31 @@ body{margin:0}
 img{max-width:100%}
 [hidden]{display:none !important}
 </style>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Salta y Aprende">
+<meta name="theme-color" content="#0F2534">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAB9UlEQVR42u3SsQmAMBRF0WxgLaS1loAjZC5HcRpnsHYQiyxgavHnwF3gPU6alk16LblAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BId+geMuJVi9pXm/ggUHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAGHxg0OwSE4BIfgEByCQ9FxPOccrN7S9ajBggMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggEPjBofgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDn1SA6avtWJYlsMgAAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAB9UlEQVR42u3SsQmAMBRF0WxgLaS1loAjZC5HcRpnsHYQiyxgavHnwF3gPU6alk16LblAcAgOwSE4BIfgEByCQ3AIDgkOwSE4BId+geMuJVi9pXm/ggUHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAEHHHDAAQcccMABBxxwwAGHxg0OwSE4BIfgEByCQ9FxPOccrN7S9ajBggMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggAMOOOCAAw444IADDjjggEPjBofgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDn1SA6avtWJYlsMgAAAAAElFTkSuQmCC">
+<style>
+/* base que en el artifact pone la plataforma */
+:root{
+  color-scheme: light dark;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
 <title>Salta y Aprende</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;700;900&display=swap">
@@ -200,6 +225,8 @@ h1 em{font-style:normal; color:var(--accent)}
   box-shadow:var(--shadow);
 }
 .ctl:active{transform:translateY(2px)}
+.ctl[disabled]{opacity:.45; cursor:default}
+.ctl[disabled]:active{transform:none}
 
 /* ---------- resumen ---------- */
 #summary{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem 20px; gap:.2rem}
@@ -538,7 +565,8 @@ h1 em{font-style:normal; color:var(--accent)}
 
   function startRound(){
     stopTimer();
-    game = {items:deck(), turn:0, hits:0, streak:0, best:0, results:[], current:null, deadline:0};
+    game = {items:deck(), turn:0, hits:0, streak:0, best:0, results:[], current:null, deadline:0, locked:false};
+    lockControls(false);
     $("hits").textContent = "0";
     var dots = $("dots"); dots.textContent = "";
     for(var i = 0; i < cfg.turnos; i++){
@@ -552,6 +580,8 @@ h1 em{font-style:normal; color:var(--accent)}
 
   function nextTurn(first){
     clearTimeout(popTimer);
+    game.locked = false;
+    lockControls(false);
     if(!first) game.turn++;
     if(game.turn >= cfg.turnos){ endRound(); return; }
     var pool = game.items.filter(function(i){ return !game.current || i.id !== game.current.id; });
@@ -599,8 +629,16 @@ h1 em{font-style:normal; color:var(--accent)}
     $("timerfill").style.width = "100%";
   }
 
+  function lockControls(on){
+    $("btn-hit").disabled = on;
+    $("btn-next").disabled = on;
+  }
+
   function mark(hit){
-    if(!game || game.turn >= cfg.turnos) return;
+    // Un turno se marca una sola vez: el elogio dura ~1 s y los clics de más no cuentan.
+    if(!game || game.locked || game.turn >= cfg.turnos) return;
+    game.locked = true;
+    lockControls(true);
     stopTimer();
     var dot = $("dots").children[game.turn];
     if(dot) dot.className = "dot " + (hit ? "hit" : "miss");
@@ -617,6 +655,7 @@ h1 em{font-style:normal; color:var(--accent)}
       pop.textContent = game.streak >= 3 ? "¡" + game.streak + " SEGUIDOS!" : "¡BIEN!";
       $("stage").appendChild(pop);
       var wait = cfg.voz ? Math.max(900, 280 + dur(praise) + 320) : 850;
+      clearTimeout(popTimer);
       popTimer = setTimeout(function(){ pop.remove(); nextTurn(false); }, wait);
     }else{
       game.streak = 0;
@@ -713,5 +752,7 @@ if("serviceWorker" in navigator){
   });
 }
 </script>
+</body>
+</html>
 </body>
 </html>
